@@ -35,7 +35,6 @@ public class Car {
             time_d += 1;
         }
         time_d += 2; // как бы время на оплату бензина
-        //System.out.println(time_d);
         return (int) time_d;
     }
 }

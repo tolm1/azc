@@ -48,11 +48,7 @@ public class Main {
     public static void main(String[] args) {
         Spavn he = new Spavn();//создали машины, много и сразу
 
-        //Kolonka k1 = new Kolonka();
-        //Kolonka k2 = new Kolonka();
-
         Kolonka[] arr_kolonka = new Kolonka[]{new Kolonka(),new Kolonka()};
-
 
         //пока с одной решу
 
@@ -60,13 +56,10 @@ public class Main {
 
         int x = car_all.length;
 
-        int i,j,cnt,q,cnt_cor,chetpick,total;
-        i = j = cnt = q = cnt_cor = chetpick =0;
-        total = 0;
+        int i,cnt,cnt_cor;
+        i = cnt = cnt_cor = 0;
 
-        boolean end_of_car = false;
-
-
+        int cor_fuel = 10000;
 
         for(int f = 0;f < car_all.length ;f++) {
             if (car_all[f][0] != 0) {
@@ -79,9 +72,10 @@ public class Main {
 
         for(int t = 0;t < 910; t++){
 
-            if(car_all[i][0] <= t && car_all[i][0] != 0){
+            if(car_all[i][0] <= t ){
                 for(Kolonka k : arr_kolonka){
-                    if(k.sostoine_rab == false){
+                    if(k.sostoine_rab == false && (cor_fuel - car_all[i][1] * 20) > 0){
+                        cor_fuel -= car_all[i][1] * 20;
                         k.add(car_all[i][1],t);
                         break;
                     }
@@ -97,133 +91,18 @@ public class Main {
                 }
             }
 
-            if(i < x && car_all[i][0] == 0){
-                i++;
-            }
-
             if(i == x){
                 break;
             }
 
             System.out.println("" + t + " " + car_all[i][0]  +" " + cnt);
 
-            /*for(Kolonka k : arr_kolonka){
-                System.out.println(k.time_out + " ");
-            }*/
+
         }
 
 
-        System.out.println("" + cnt_cor + " " + (cnt));
-
-        /*for(int t = 0; t < 940; t++){
-            i = chetpick%20;
-            j = chetpick%15;
-
-            //if(car_all[i][j])
-        }*/
+        System.out.println("" + cnt_cor + " " + cor_fuel);
 
 
-        /*for(int t = 0; t < 940; t++){
-
-
-            if(car_all[i][j][0] <= t && car_all[i][j][1] != 0 && end_of_car == false && (k1.sostoine_rab == false || k1.sostoine_rab == false)){
-                if(k1.sostoine_rab == false && k2.sostoine_rab == true) {
-                    k1.add(car_all[i][j][1], t);
-                }
-                if(k1.sostoine_rab == true && k2.sostoine_rab == false) {
-                    k2.add(car_all[i][j][1], t);
-                }else {
-                    k2.add(car_all[i][j][1], t);
-                }
-
-            }
-
-            if(k1.time_out == t){
-                k1.sostoine_rab = false;
-                k1.time_out = 0;
-
-                cnt++;
-                j++;
-
-                if(j == 20 && i < 14){
-                    j = 0;
-                    i++;
-                }
-                if(j == 0 && i == 15){
-                    end_of_car = true;
-                }
-            }
-
-            if(k2.time_out == t){
-                k2.sostoine_rab = false;
-                k2.time_out = 0;
-
-                cnt++;
-                j++;
-
-                if(j == 20 && i < 14){
-                    j = 0;
-                    i++;
-                }
-                if(j == 0 && i == 15){
-                    end_of_car = true;
-                }
-            }
-
-            if(end_of_car == false && car_all[i][j][1] == 0){
-                j++;
-                total++;
-                if(j == 20 && i < 14){
-                    j = 0;
-                    i++;
-                }
-                if(j == 0 && i == 15){
-                    end_of_car = true;
-                }
-            }
-
-
-
-            System.out.println("" + t + " " + k1.time_out + " " + k2.time_out + " " + cnt);
-        }
-        System.out.println("" + cnt_cor + " " + i +" "+ j);*/
-
-
-
-        /*//int n = 7;
-        Spavn he = new Spavn();
-        int[][][] aa = he.spavn(); //получил матрицы 15 на 20 на 2. 15 - часы работы с 7 по 22, 20 каждые 5 минут может приехать машина
-
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 20; j++) {
-                System.out.println("" + aa[i][j][0] + " " + aa[i][j][1]); //приеда приезда, вермя заправки
-            }
-        }
-
-        int i = 0;
-        int j = 0;
-        int zanat = 0;
-        int time_corrent1 = 0;
-        //int time_corrent2 = 0;
-        int aviting = 0;
-        int cnt = 0;
-
-        System.out.println(" ");
-
-        for(int t = 1; t < 940; t++){
-            //попытка в очередь, сначала с 1 колонкой разоберусь
-            if(t == aa[i][j][0] && zanat == 0){
-                time_corrent1 = t + aa[i][j][1];
-                zanat++;
-            }
-            if(t == time_corrent1){
-                cnt++;
-                j++;
-                time_corrent1 = 0;
-                zanat--;
-            }
-            System.out.println(t + " " + time_corrent1);
-        }
-        System.out.println("" + cnt);*/
     }
 }

@@ -48,7 +48,7 @@ public class Main {
     public static void main(String[] args) {
         Spavn he = new Spavn();//создали машины, много и сразу
 
-        Kolonka[] arr_kolonka = new Kolonka[]{new Kolonka(),new Kolonka()};
+        Kolonka[] arr_kolonka = new Kolonka[]{new Kolonka(), new Kolonka()};
 
         //пока с одной решу
 
@@ -56,12 +56,17 @@ public class Main {
 
         int x = car_all.length;
 
-        int i,cnt,cnt_cor;
-        i = cnt = cnt_cor = 0;
+        int i, cnt, cnt_cor,size_kol,time_ozit,count_cor_day,count_quq;
+        i = cnt = cnt_cor = time_ozit = count_cor_day = count_quq = 0;
 
+        size_kol = 2;
+
+        //int[] cor_day = new int[7];
+
+        boolean need_fuel = false;
         int cor_fuel = 10000;
 
-        for(int f = 0;f < car_all.length ;f++) {
+        for (int f = 0; f < car_all.length; f++) {
             if (car_all[f][0] != 0) {
                 cnt_cor++;
             }
@@ -70,39 +75,77 @@ public class Main {
 
         System.out.println(" abc ");
 
-        for(int t = 0;t < 910; t++){
+        for (int day = 0; day < 7; day++) {
 
-            if(car_all[i][0] <= t ){
-                for(Kolonka k : arr_kolonka){
-                    if(k.sostoine_rab == false && (cor_fuel - car_all[i][1] * 20) > 0){
-                        cor_fuel -= car_all[i][1] * 20;
-                        k.add(car_all[i][1],t);
-                        break;
+            if(count_quq > 0 && day - count_cor_day == 2){//есть запрос на добавление колонки
+
+                size_kol++;
+                Kolonka[] arr_kolonka2 = new Kolonka[size_kol];
+                count_cor_day = 0;
+                count_quq = 0;
+
+                for(int index = 0; index < size_kol; index++){
+                    arr_kolonka2[index] = new Kolonka();
+                }
+
+                arr_kolonka = arr_kolonka2;
+            }
+
+            i = 0;
+            cor_fuel = 10000;
+            need_fuel = false;
+
+
+            for (int t = 0; t < 910; t++) {
+                if (i < x) {
+                    System.out.println("" + t + " " + car_all[i][0] + " " + cnt + " " + x);
+                }
+
+                if (car_all[i][0] <= t && (t - car_all[i][0]) <= car_all[i][2]) {
+                    for (Kolonka k : arr_kolonka) {
+                        if (k.sostoine_rab == false && (cor_fuel - car_all[i][1] * 20) >= 0) {
+                            cor_fuel -= car_all[i][1] * 20;
+                            k.add(car_all[i][1], t);
+                            break;
+                        }
+                        if ((cor_fuel - car_all[i][1] * 20) < 0) {
+                            need_fuel = true;
+                            time_ozit = t;
+                        }
                     }
                 }
-            }
 
-            for(Kolonka k : arr_kolonka){
-                if(k.time_out == t){
-                    k.sostoine_rab = false;
-                    k.time_out = 0;
+                if ((t - car_all[i][0]) > car_all[i][2] && count_cor_day == 0) {
                     i++;
-                    cnt++;
+                    count_quq++;
+                    count_cor_day = day;//сохранил, когда появился запрос на добавление колонки
+                }
+
+                if(need_fuel == true && (t - time_ozit) > 100){
+                    need_fuel = false;
+                    cor_fuel += 2000;
+                    time_ozit = 0;
+                }
+
+                for (Kolonka k : arr_kolonka) {
+                    if (k.time_out == t) {
+                        k.sostoine_rab = false;
+                        k.time_out = 0;
+                        i++;
+                        cnt++;
+                    }
+                }
+
+                if (i == x) {
+                    break;
+                }
+
+                for (Kolonka k : arr_kolonka) {
+                    System.out.println(k.time_out);
                 }
             }
 
-            if(i == x){
-                break;
-            }
-
-            System.out.println("" + t + " " + car_all[i][0]  +" " + cnt);
-
-
+            System.out.println("" + cnt_cor + " " + cnt + " " + cor_fuel + " " + count_quq + " " + arr_kolonka.length + " " + size_kol);
         }
-
-
-        System.out.println("" + cnt_cor + " " + cor_fuel);
-
-
     }
 }

@@ -2,6 +2,7 @@ public class Car {
     public int bak_v; //30-110
     public int bak_in;
     public int bak_zap;
+    public int time_wait;
 
     public void getbak_v(){
         int a  = (int) (Math.random() * 80);
@@ -19,10 +20,16 @@ public class Car {
         bak_zap = a;
     }
 
+    public void gettime_wait(){
+        int a  = (int) (Math.random() * 10) + 1;
+        time_wait = a;
+    }
+
     public Car() {
         getbak_v();
         getbak_in();
         getbak_zap();
+        gettime_wait();
     }
 
     public void show(){

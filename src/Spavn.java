@@ -6,7 +6,7 @@ public class Spavn {
     //private int n; // час
 
     public int[][] spavn() {
-        int[][] arr_time = new int[181][2];
+        int[][] arr_time = new int[450][3];
         int cnt = 0;
 
         for (int i = 0; i < 15; i++) {
@@ -15,19 +15,21 @@ public class Spavn {
                     Car ma = new Car();
                     arr_time[j + i*12][0] = (i + 0) * 60 + (j + 1) * 5;
                     arr_time[j + i*12][1] = ma.time_to_zap();
+                    arr_time[j + i*12][2] = ma.time_wait;
                     cnt++;
                 }
             }
         }
 
-        int[][] time = new int[cnt][2];
+        int[][] time = new int[cnt][3];
         int ff  = 0;
         for(int t = 0; t < cnt; t++){
             boolean f = true;
-            for(int i = ff; i < 181;i++){
+            for(int i = ff; i < 180;i++){
                 if(arr_time[i][0] != 0 && f == true){
                     time[t][0] = arr_time[i][0];
                     time[t][1] = arr_time[i][1];
+                    time[t][2] = arr_time[i][2];
                     ff = i+1;
 
                     f = false;
